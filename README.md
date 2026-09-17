@@ -36,6 +36,9 @@ dist/         standalone static demo for deployment
 - Add-subscriber workflow
 - Delivery volume and billing readiness dashboard
 - Responsive interface for operations staff
+- Weekday delivery-notification outbox for Notification Service integration
+- Mid-cycle subscription transfer with carried plan/cycle and a billing split
+- Messy customer-list import with imported, deduped and rejected-row reporting
 
 ## Setup and run
 
@@ -55,6 +58,18 @@ Open `http://localhost:3000`. Use the seeded demo account: `owner@tiffinflow.tes
 | GET | `/api/customers?q=&page=&limit=&sort=&order=` | Search, sort and paginate subscribers |
 | POST | `/api/customers` | Create a subscriber subscription |
 | PATCH | `/api/customers/:id/status` | Pause or resume a subscription |
+| POST | `/clock` | Queue weekday delivery-due notifications for active customers |
+| GET | `/outbox?date=YYYY-MM-DD` | Inspect notifications queued for Notification Service |
+| POST | `/api/subscriptions/:id/transfer` | Transfer plan/cycle to a new customer and return the billing split |
+| POST | `/api/import/customers` | Import messy customer rows and return imported/deduped/rejected report |
+
+## Twist scenarios
+
+`POST /clock` accepts an optional `{ "date": "2026-09-17" }` body. On a weekday it adds exactly one `delivery_due` outbox event per active customer; repeat calls are idempotent and weekends queue no messages. `GET /outbox` is intentionally available without login so an evaluation harness can inspect the integration result.
+
+To transfer a subscription, send `{ "name": "New customer", "phone": "9876543210", "effectiveDate": "2026-09-17" }` to `POST /api/subscriptions/:id/transfer`. The new customer inherits the plan and price; confirmed delivery records keep the previous customer's bill separate.
+
+For data cleanup, send `{ "rows": [...] }` to `POST /api/import/customers`. Phone numbers are normalized before duplicate detection, common `DD/MM/YYYY` and ISO date formats are cleaned, blank start dates default to today, and the result contains `imported`, `deduped`, and `rejected` arrays.
 
 ## Suggested academic extension
 
