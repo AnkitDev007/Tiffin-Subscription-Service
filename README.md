@@ -1,4 +1,4 @@
-# TiffinFlow â€” Delivery-Aware Tiffin Management
+# TiffinFlow — Delivery-Aware Tiffin Management
 
 A fourth-year CSE project for operating a subscription tiffin service. It models customers, subscriptions, delivery counts, pause/resume states, and delivery-aware monthly invoices.
 
@@ -6,7 +6,7 @@ A fourth-year CSE project for operating a subscription tiffin service. It models
 
 For a billing month, the payable amount is:
 
-`monthly plan price / scheduled service days Ã— confirmed delivery days`
+`monthly plan price / scheduled service days × confirmed delivery days`
 
 This makes pausing fair: paused days never become chargeable days.
 
