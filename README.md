@@ -1,6 +1,6 @@
-# TiffinFlow
+# TiffinFlow — Delivery-Aware Tiffin Management
 
-A fourth-year CSE project prototype for operating a subscription tiffin service. It implements the core scenario: customer search by phone, active/paused visibility, pause/resume controls, delivery reporting, and billing that is explicitly based on delivered service days.
+A fourth-year CSE project for operating a subscription tiffin service. It models customers, subscriptions, delivery counts, pause/resume states, and delivery-aware monthly invoices.
 
 ## Core idea
 
@@ -9,6 +9,17 @@ For a billing month, the payable amount is:
 `monthly plan price / scheduled service days × confirmed delivery days`
 
 This makes pausing fair: paused days never become chargeable days.
+
+## Project structure
+
+```text
+client/       browser dashboard (HTML, CSS, JavaScript)
+server/       Node.js REST API and billing rules
+data/         development data repository
+tests/        automated business-rule tests
+docs/         architecture and database design for report/viva
+dist/         standalone static demo for deployment
+```
 
 ## Features
 
@@ -21,8 +32,12 @@ This makes pausing fair: paused days never become chargeable days.
 
 ## Run locally
 
-Open `dist/index.html` in a modern browser. No server or package installation is required.
+```bash
+npm start
+```
+
+Open `http://localhost:3000`. Run the automated business-rule test with `npm test`.
 
 ## Suggested academic extension
 
-Replace browser storage with a Node/Express API and PostgreSQL. Model `Customer`, `Subscription`, `PauseWindow`, `Delivery`, and `Invoice` as separate tables; then generate invoices from confirmed delivery records. Add login roles for owner, delivery staff, and customer.
+Replace the JSON development repository with PostgreSQL. Model `Customer`, `Subscription`, `PauseWindow`, `Delivery`, and `Invoice` as separate tables; then generate invoices from confirmed delivery records. Add login roles for owner, delivery staff, and customer.

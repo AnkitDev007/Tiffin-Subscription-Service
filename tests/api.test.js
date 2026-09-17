@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { invoiceAmount } from '../server/database.js';
+import { invoice } from '../server/store.js';
 
 test('invoice excludes non-delivered service days', () => {
-  assert.equal(invoiceAmount(3000,17,22), 2318);
+  const result = invoice({ monthlyPrice: 3000, deliveredDays: 17 }, 22);
+  assert.equal(result.invoiceAmount, 2318);
 });
