@@ -1,6 +1,6 @@
 # TiffinFlow — Delivery-Aware Tiffin Management
 
-A fourth-year CSE project for operating a subscription tiffin service. It models customers, subscriptions, delivery counts, pause/resume states, and delivery-aware monthly invoices.
+A project for operating a subscription tiffin service. It models customers, subscriptions, delivery counts, pause/resume states, and delivery-aware monthly invoices.
 
 ## Core idea
 
@@ -10,12 +10,11 @@ For a billing month, the payable amount is:
 
 This makes pausing fair: paused days never become chargeable days.
 
-## Mandatory evaluation checklist
+## Product capabilities
 
 - Real persistence: SQLite database generated at `data/tiffinflow.db` from a relational schema.
 - REST API: authenticated core operations listed below.
 - Usable UI: landing page, registration/login, dashboard, search, sorting and pagination.
-- Root documents: `README.md`, `REASONING.md`, and the required unedited `AI_LOGS.md` transcript.
 
 ## Project structure
 
@@ -71,6 +70,6 @@ To transfer a subscription, send `{ "name": "New customer", "phone": "9876543210
 
 For data cleanup, send `{ "rows": [...] }` to `POST /api/import/customers`. Phone numbers are normalized before duplicate detection, common `DD/MM/YYYY` and ISO date formats are cleaned, blank start dates default to today, and the result contains `imported`, `deduped`, and `rejected` arrays.
 
-## Suggested academic extension
+## What's next
 
 Add customer self-service pauses, delivery-route optimization, and UPI invoice reconciliation. A production deployment can move the same schema to PostgreSQL and add role-based access for owners, delivery staff and customers.
